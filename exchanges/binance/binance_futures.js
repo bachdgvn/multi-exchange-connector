@@ -22,7 +22,8 @@ export class BinanceFutures {
                 if (item.filters) {
                     for (let filter of item.filters) {
                         if (filter.filterType === 'PRICE_FILTER') {
-                            return Math.round(1 / parseFloat(filter.tickSize))
+                            pricescale = Math.round(1 / parseFloat(filter.tickSize))
+                            break
                         }
                     }
                 }
