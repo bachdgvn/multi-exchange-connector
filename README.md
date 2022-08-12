@@ -52,3 +52,8 @@ Then, set api as value for datafeed property
 with **exchange** is one of ['binance_futures', 'ftx_futures']
 
 Do the same if you want to use this library with Reactjs.
+
+## Note
+This library needs to come with TradingView's charting_library so you need to have charting_library first.
+Check that you can view https://github.com/tradingview/charting_library/.
+If you do not have access then you can request access to [this repository here](https://www.tradingview.com/HTML5-stock-forex-bitcoin-charting-library/).
