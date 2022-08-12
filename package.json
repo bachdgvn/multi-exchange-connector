@@ -1,6 +1,6 @@
 {
   "name": "multi-exchange-datafeeds",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "charting_library's datafeeds for connecting Binance, FTX, gets candlestick data and displays it likes TradingView",
   "repository": {
     "type": "git",

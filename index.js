@@ -52,32 +52,10 @@ function getConfigurationCallback(exchange_market) {
             const comps = symbolName.split(':')
             symbolName = (comps.length > 1 ? comps[1] : symbolName).toUpperCase()
 
-
-            // need for pricescale()
-            function pricescale(symbol) {
-                if (symbol.filters) {
-                    for (let filter of symbol.filters) {
-                        if (filter.filterType === 'PRICE_FILTER') {
-                            return Math.round(1 / parseFloat(filter.tickSize))
-                        }
-                    }
-                }
-                return 1
-            }
-
-            const symbolInfo = (symbol) => {
-                const data = {
-                    ...symbol,
-                    pricescale: pricescale(symbol), // 	or 100
-                }
-                console.log(data)
-                return data
-            }
-
             // Get symbols
             exchange.getSymbols().then(symbols => {
                 const symbol = symbols.find(i => i.name == symbolName)
-                return symbol ? onSymbolResolvedCallback(symbolInfo(symbol)) : onResolveErrorCallback('[resolveSymbol]: symbol not found')
+                return symbol ? onSymbolResolvedCallback(symbol) : onResolveErrorCallback('[resolveSymbol]: symbol not found')
             })
         },
         // get historical data for the symbol
