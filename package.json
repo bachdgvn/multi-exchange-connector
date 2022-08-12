@@ -1,7 +1,7 @@
 {
   "name": "multi-exchange-datafeeds",
   "version": "1.0.2",
-  "description": "charting_library's datafeeds for connecting Binance, FTX, gets candlestick data and displays it likes TradingView",
+  "description": "charting_library\'s datafeeds for connecting Binance, FTX, gets candlestick data and displays it likes TradingView",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
