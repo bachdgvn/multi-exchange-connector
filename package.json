@@ -1,0 +1,12 @@
+{
+  "name": "multi-exchange-connector",
+  "version": "1.0.1",
+  "description": "JS client connector for connecting Binance, FTX, gets candlestick data and displays it on TradingView's charting_library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
