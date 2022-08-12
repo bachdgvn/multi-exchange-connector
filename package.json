@@ -1,7 +1,11 @@
 {
   "name": "multi-exchange-datafeeds",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "charting_library's datafeeds for connecting Binance, FTX, gets candlestick data and displays it likes TradingView",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bachdgvn/multi-exchange-connector.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
