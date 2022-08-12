@@ -17,6 +17,16 @@ export class BinanceFutures {
             const usableSymbols = symbols.filter(item => {
                 return item.symbol.includes('USDT')
             }).map(item => {
+                // need for pricescale()
+                let pricescale = 1
+                if (item.filters) {
+                    for (let filter of item.filters) {
+                        if (filter.filterType === 'PRICE_FILTER') {
+                            return Math.round(1 / parseFloat(filter.tickSize))
+                        }
+                    }
+                }
+
                 return {
                     name: item.symbol,
                     description: item.baseAsset + '/' + item.quoteAsset,
@@ -27,7 +37,8 @@ export class BinanceFutures {
                     has_intraday: true,
                     has_daily: true,
                     has_weekly_and_monthly: true,
-                    currency_code: item.quoteAsset
+                    currency_code: item.quoteAsset,
+                    pricescale: pricescale
                 }
             })
 

@@ -30,7 +30,8 @@ export class FtxFutures {
                 has_intraday: true,
                 has_daily: true,
                 has_weekly_and_monthly: true,
-                currency_code: 'USDT'
+                currency_code: 'USDT',
+                pricescale: 1 // it will not show number as float
             }
         }))
     }
@@ -83,7 +84,6 @@ export class FtxFutures {
                         close: parseFloat(result.close),
                         volume: parseFloat(result.volume),
                     }
-                    console.log('newBar:: ', newBar)
                     callback(newBar)
                 })
         }, 500)
