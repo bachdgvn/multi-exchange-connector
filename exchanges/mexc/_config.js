@@ -1,4 +1,4 @@
-import {closeSocket, setupWebSocket} from "@/components/chart-container/api/exchanges/binance/_utils";
+import {closeSocket, setupWebSocket} from "../utils";
 
 class MexcConfig {
     constructor(market) {

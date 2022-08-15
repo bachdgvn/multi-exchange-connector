@@ -1,4 +1,4 @@
-import {setupWebSocket, closeSocket} from './_utils'
+import {setupWebSocket, closeSocket} from '../utils'
 
 class BinanceConfig {
     constructor(market) {
