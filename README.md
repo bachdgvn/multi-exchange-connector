@@ -1,6 +1,6 @@
 # multi-exchange-datafeeds
 
-charting_library's datafeeds multi-exchange. This library will connect Binance, FTX, gets candlestick data and help you show the candles likes TradingView.
+charting_library's datafeeds multi-exchange. This library will connect Binance, FTX, MEXC gets candlestick data and help you show the candles likes TradingView.
 
 If you need to write code to provide data to display like TradingView. You don't need to write datafeeds for each crypto exchange anymore. This library is perfect because it solves every problem you need for a full-features datafeeds.
 
@@ -49,7 +49,7 @@ Then, set api as value for datafeed property
       const tvWidget = new widget(widgetOptions);
 ```
 
-with **exchange** is one of ['binance_futures', 'ftx_futures']
+with **exchange** is one of ['binance_futures', 'ftx_futures', 'mexc_futures']
 
 Do the same if you want to use this library with Reactjs.
 

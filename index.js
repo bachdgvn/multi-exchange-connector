@@ -11,7 +11,7 @@ const configurationData = {
     supports_time: true,
     supported_resolutions: [
         // '1', '3', '5', '15', '30', '60', '120', '240', '1D', '3D', '1W', '1M'
-        '1', '3', '5', '15', '30', '60', '120', '240', '1D'
+        '1', '5', '15', '30', '60', '120', '240', '1D'
     ]
 };
 
@@ -104,6 +104,7 @@ function getConfigurationCallback(exchange_market) {
 const api = {
     'binance_futures': getConfigurationCallback('binance_futures'),
     'ftx_futures': getConfigurationCallback('ftx_futures'),
+    'mexc_futures': getConfigurationCallback('mexc_futures'),
 }
 
 export default api

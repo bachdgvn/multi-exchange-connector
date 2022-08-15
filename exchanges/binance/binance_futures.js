@@ -85,9 +85,9 @@ export class BinanceFutures {
 
     subscribeKline({symbol, interval, uniqueID}, callback) {
         interval = this.config.intervals[interval] // set interval
-        return this.config.stream_api['open'].kline({symbol, interval, uniqueID}, res => {
+        return this.config.stream_api['open'].kline({symbol, interval, uniqueID}, ({msg}) => {
             // Rename options
-            const data = rename(res)
+            const data = rename(msg)
             const candle = this.formatingKline(data.kline)
             callback(candle)
         })
