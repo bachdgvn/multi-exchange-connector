@@ -39,12 +39,13 @@ export class MexcFutures {
 
     async getSearchableSymbols() {
         const rawSymbols = await this.getSymbols()
+        console.log('rawSymbols:: ', rawSymbols)
 
         return rawSymbols.map((s) => {
             return {
-                symbol: s.symbol,
-                full_name: s.symbol,
-                description: s.displayNameEn,
+                symbol: s.name,
+                full_name: s.name,
+                description: s.description,
                 exchange: this.exchange,
                 type: 'crypto',
             };
@@ -68,7 +69,6 @@ export class MexcFutures {
                         'volume': data.vol[i],
                     })
                 });
-                console.log('tmp:: ', tmp)
 
                 return tmp.map(i => ({
                     time: parseFloat(i.time) * 1000,

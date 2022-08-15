@@ -49,14 +49,14 @@ export class BinanceFutures {
 
     async getSearchableSymbols() {
         const rawSymbols = await this.getSymbols()
-        // console.log("rawSymbols", rawSymbols);
+        console.log("rawSymbols", rawSymbols);
         const exchange = 'Binance';
 
         return rawSymbols.map((s) => {
             return {
-                symbol: s.symbol,
-                full_name: s.symbol,
-                description: s.symbol,
+                symbol: s.name,
+                full_name: s.name,
+                description: s.description,
                 exchange: exchange,
                 type: 'crypto',
             };

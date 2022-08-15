@@ -16,7 +16,8 @@ const configurationData = {
 };
 
 function getConfigurationCallback(exchange_market) {
-	const exchange = new exchanges[exchange_market]()
+	const client = new exchanges[exchange_market]()
+
     return {
         // get a configuration of your datafeed (e.g. supported resolutions, exchanges and so on)
         onReady: (callback) => {
@@ -36,7 +37,8 @@ function getConfigurationCallback(exchange_market) {
             onResultReadyCallback,
         ) => {
             // console.log('[searchSymbols]: Method call');
-            const symbols = await exchange.getSearchableSymbols();
+            const symbols = await client.getSearchableSymbols();
+
             const newSymbols = symbols.filter(symbol => {
                 const isFullSymbolContainsInput = symbol['symbol']
                     .toLowerCase()
@@ -53,7 +55,7 @@ function getConfigurationCallback(exchange_market) {
             symbolName = (comps.length > 1 ? comps[1] : symbolName).toUpperCase()
 
             // Get symbols
-            exchange.getSymbols().then(symbols => {
+            client.getSymbols().then(symbols => {
                 const symbol = symbols.find(i => i.name == symbolName)
                 return symbol ? onSymbolResolvedCallback(symbol) : onResolveErrorCallback('[resolveSymbol]: symbol not found')
             })
@@ -63,11 +65,11 @@ function getConfigurationCallback(exchange_market) {
         getBars: async (symbolInfo, interval, periodParams, onHistoryCallback, onErrorCallback) => {
             console.log('[getBars] Method call', symbolInfo, interval)
 
-            if (!exchange.checkInterval(interval)) {
+            if (!client.checkInterval(interval)) {
                 return onErrorCallback('[getBars] Invalid interval')
             }
 
-            const klines = await exchange.getKlines({
+            const klines = await client.getKlines({
                 symbol: symbolInfo.name,
                 interval,
                 from: periodParams.from,
@@ -85,14 +87,14 @@ function getConfigurationCallback(exchange_market) {
         // subscribeBars: (symbolInfo, interval, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
         // eslint-disable-next-line no-unused-vars
         subscribeBars: (symbolInfo, interval, onRealtimeCallback, subscribeUID) => {
-            exchange.subscribeKline({symbol: symbolInfo.name, interval, subscribeUID}, cb => onRealtimeCallback(cb))
+            client.subscribeKline({symbol: symbolInfo.name, interval, subscribeUID}, cb => onRealtimeCallback(cb))
         },
         // eslint-disable-next-line no-unused-vars
         unsubscribeBars: (subscribeUID) => {
-            exchange.unsubscribeKline(subscribeUID)
+            client.unsubscribeKline(subscribeUID)
         },
         getServerTime: (callback) => {
-            exchange.getExchangeServerTime().then(time => {
+            client.getExchangeServerTime().then(time => {
                 callback(Math.floor(time / 1000))
             }).catch(err => {
                 console.error(err)
