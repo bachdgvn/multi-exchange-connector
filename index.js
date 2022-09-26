@@ -79,7 +79,7 @@ function getConfigurationCallback(exchange_market) {
             if (klines.length > 0) {
                 return onHistoryCallback(klines)
             } else {
-                return onHistoryCallback({
+                return onHistoryCallback(klines, {
                     noData: true
                 })
             }
