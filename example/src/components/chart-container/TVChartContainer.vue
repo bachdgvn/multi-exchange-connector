@@ -1,103 +1,93 @@
 <template>
-  <div id="app">
-    <div style="height: 50px; display: flex; flex-direction: row; align-items: center;">
-      <select v-model="currentExchange">
-        <option v-for="option in exchanges" v-bind:value="option.value" :key="option.value">
-          {{ option.text }}
-        </option>
-      </select>
-      <select v-model="currentSymbol" style="margin-left: 20px;">
-        <option v-for="option in symbols" v-bind:value="option.value" :key="option.value">
-          {{ option.text }}
-        </option>
-      </select>
-    </div>
-    <TVChartContainer :symbol="currentSymbol" :exchange="currentExchange"/>
-  </div>
+  <div class="TVChartContainer" ref="chartContainer"/>
 </template>
 
 <script>
-import TVChartContainer from '@/components/chart-container/TVChartContainer.vue'
+import api from 'multi-exchange-datafeeds'
+import {widget} from '../../../public/charting_library';
+
+function getLanguageFromURL() {
+  const regex = new RegExp('[\\?&]lang=([^&#]*)');
+  const results = regex.exec(window.location.search);
+  return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
 
 export default {
-  name: 'App',
-  components: {
-    TVChartContainer
+  name: 'TVChartContainer',
+  tvWidget: null,
+
+  props: {
+    symbol: {
+      type: String,
+    },
+    exchange: {
+      type: String,
+    },
   },
 
   data() {
-    return {
-      // currentSymbol: 'BTCUSDT',
-      // currentExchange: 'binance_futures',
-      // currentSymbol: 'BTC-PERP',
-      // currentExchange: 'ftx_futures',
-      currentSymbol: 'BTC_USDT',
-      currentExchange: 'mexc_futures',
-      exchanges: [
-        {
-          value: 'binance_futures',
-          text: 'Binance Futures'
-        },
-        {
-          value: 'ftx_futures',
-          text: 'FTX Futures'
-        },
-        {
-          value: 'mexc_futures',
-          text: 'MEXC Futures'
-        },
-      ]
-    }
+    return {}
   },
 
   watch: {
-    currentExchange: {
+    symbol: {
       handler() {
-        this.currentSymbol = this.symbols[0].value
-      }
+        setTimeout(() => {
+          this.generateChart();
+        })
+      },
+      immediate: true,
+    },
+    exchange: {
+      handler() {
+        setTimeout(() => {
+          this.generateChart();
+        })
+      },
+      immediate: true,
+    },
+  },
+
+  methods: {
+    generateChart() {
+      const container = this.$refs.chartContainer;
+
+      const widgetOptions = {
+        symbol: this.symbol,
+        datafeed: api[this.exchange],
+        interval: '15',
+        container: container,
+        library_path: '/charting_library/',
+        locale: getLanguageFromURL() || 'en',
+        disabled_features: ['use_localstorage_for_settings'],
+        enabled_features: ['study_templates'],
+        charts_storage_url: 'https://saveload.thecryptobox.io',
+        charts_storage_api_version: '1.1',
+        client_id: 'tradingview.com',
+        user_id: 'public_id',
+        fullscreen: true,
+        autosize: true,
+        load_last_chart: true,
+      };
+
+      const tvWidget = new widget(widgetOptions);
+      this.tvWidget = tvWidget;
+      tvWidget.onChartReady(() => {
+      });
     }
   },
 
-  computed: {
-    symbols() {
-      if (this.currentExchange.includes('binance')) {
-        return [
-          {
-            value: 'BTCUSDT',
-            text: 'BTCUSDT'
-          },
-          {
-            value: 'ADAUSDT',
-            text: 'ADAUSDT'
-          },
-        ]
-      }
-      else if (this.currentExchange.includes('ftx')) {
-        return [
-          {
-            value: 'BTC-PERP',
-            text: 'BTC-PERP'
-          },
-          {
-            value: 'ADA-PERP',
-            text: 'ADA-PERP'
-          },
-        ]
-      }
-      else {
-        return [
-          {
-            value: 'BTC_USDT',
-            text: 'BTC_USDT'
-          },
-          {
-            value: 'ADA_USDT',
-            text: 'ADA_USDT'
-          },
-        ]
-      }
+  destroyed() {
+    if (this.tvWidget !== null) {
+      this.tvWidget.remove();
+      this.tvWidget = null;
     }
   }
 }
 </script>
 
+<style scoped>
+.TVChartContainer {
+  height: calc(100vh - 80px);
+}
+</style>

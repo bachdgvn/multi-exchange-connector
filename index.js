@@ -10,8 +10,8 @@ const configurationData = {
     supports_timescale_marks: false,
     supports_time: true,
     supported_resolutions: [
-        // '1', '3', '5', '15', '30', '60', '120', '240', '1D', '3D', '1W', '1M'
-        '1', '5', '15', '30', '60', '120', '240', '1D'
+        '1', '3', '5', '15', '30', '60', '120', '240', '1D', '3D', '1W', '1M'
+        // '1', '5', '15', '30', '60', '120', '240', '1D'
     ]
 };
 
@@ -78,9 +78,12 @@ function getConfigurationCallback(exchange_market) {
             // console.log(klines)
             if (klines.length > 0) {
                 return onHistoryCallback(klines)
+            } else {
+                return onHistoryCallback({
+                    noData: true
+                })
             }
-
-            onErrorCallback('Klines data error')
+            // onErrorCallback('Klines data error')
 
         },
         // subscription to real-time updates
